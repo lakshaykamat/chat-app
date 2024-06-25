@@ -1,24 +1,38 @@
 const express = require("express")
-const {chats} = require("./data/data.js")
+const morgan = require("morgan")
+const bodyParser = require("body-parser")
 const cors = require('cors')
+const connectDatabase = require('./config/mongo.js')
+const routes = require("./routes")
+const errorHandler = require("./middleware/errorHandler.js")
+const notFound = require("./middleware/notFound.js")
 
-const app = express()
-app.use(cors())
+
 const PORT = process.env.PORT || 5000
+const app = express()
+connectDatabase()
+
+// Middleware for logging HTTP requests
+app.use(morgan("dev"));
+app.use(cors())
+
+// Middleware for parsing JSON and URL-encoded request bodies
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended:true}))
+
+// Middleware for redirecting "/" to "/api/v1"
 app.get("/",(req,res)=>{
-    res.send("Api running")
+    res.redirect("/api/v1")
 })
 
-app.get("/api/chat",(req,res)=>{
-    console.log(chats)
-    return res.json(chats)
-})
+// Routes
+app.use("/api/v1", routes);
 
 
-app.get("/api/chat/:id",(req,res)=>{
-    const { id } = req.params
-    const chat =  chats.find(chat=>chat._id==id)
-    res.json(chat)
-})
+// Middleware for handling "Not Found" routes
+app.use(notFound);
 
-app.listen(PORT,console.log(`Server listening on port http://localhost:${PORT}/`))
+//Middleware for error
+app.use(errorHandler);
+
+app.listen(PORT,console.log(`Server listening on port http://localhost:${PORT}/`.yellow))
