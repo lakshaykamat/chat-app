@@ -1,16 +1,15 @@
 const express = require("express");
-const { registerUser, loginUser } = require("../controller/userController");
+const { registerUser, loginUser,allUsers,searchUser } = require("../controller/userController");
 const isAuthenticated = require("../middleware/isAuthenticated");
 
 const router = express.Router();
 
+router.get("/",isAuthenticated,allUsers);
 router.post("/register",registerUser);
-
-
 router.post("/login", loginUser);
 
 // Protected routes (example)
-router.get("/profile", isAuthenticated, (req, res) => {
+router.get("/me", isAuthenticated, (req, res) => {
     res.json(req.user);
 });
 

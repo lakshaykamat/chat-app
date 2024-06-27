@@ -14,7 +14,7 @@ const registerUser = async (req, res, next) => {
     // Check if the user already exists
     const userExists = await User.findOne({ email });
     if (userExists) {
-        throw new CustomError(HttpStatusCode.BAD_REQUEST, "User already exists")
+      throw new CustomError(HttpStatusCode.BAD_REQUEST, "User already exists");
     }
 
     // Create a new user
@@ -22,11 +22,11 @@ const registerUser = async (req, res, next) => {
       name,
       email,
       password, // Password will be hashed in the User model pre-save hook
-      avatar
+      avatar,
     });
 
     // Create a JWT token
-    const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '30d' });
+    const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: "30d" });
 
     res.status(201).json({
       _id: user._id,
@@ -34,7 +34,7 @@ const registerUser = async (req, res, next) => {
       email: user.email,
       avatar: user.avatar,
       isAdmin: user.isAdmin,
-      token
+      token,
     });
   } catch (error) {
     next(error);
@@ -49,17 +49,23 @@ const loginUser = async (req, res, next) => {
     // Find the user by email
     const user = await User.findOne({ email });
     if (!user) {
-        throw new CustomError(HttpStatusCode.UNAUTHORIZED , "Invalid email or password")
+      throw new CustomError(
+        HttpStatusCode.UNAUTHORIZED,
+        "Invalid email or password"
+      );
     }
 
     // Check if the password matches
     const isMatch = await user.matchPassword(password);
     if (!isMatch) {
-        throw new CustomError(HttpStatusCode.UNAUTHORIZED, "Invalid email or password")
+      throw new CustomError(
+        HttpStatusCode.UNAUTHORIZED,
+        "Invalid email or password"
+      );
     }
 
     // Create a JWT token
-    const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '30d' });
+    const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: "30d" });
 
     res.json({
       _id: user._id,
@@ -67,11 +73,28 @@ const loginUser = async (req, res, next) => {
       email: user.email,
       avatar: user.avatar,
       isAdmin: user.isAdmin,
-      token
+      createdAt:user.createdAt,
+      token,
     });
   } catch (error) {
     next(error);
   }
 };
 
-module.exports = { registerUser, loginUser };
+const allUsers = async (req, res,next) => {
+  try {
+    const keyword = req.query.search
+      ? {
+          $or: [
+            { name: { $regex: req.query.search, $options: "i" } },
+            { email: { $regex: req.query.search, $options: "i" } },
+          ],
+        }
+      : {};
+    const users = await User.find(keyword).find({ _id: { $ne: req.user._id } });
+    res.send(users);
+  } catch (error) {
+    next(error);
+  }
+};
+module.exports = { registerUser, loginUser, allUsers };

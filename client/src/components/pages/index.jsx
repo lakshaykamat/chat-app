@@ -1,7 +1,7 @@
-import ChatsPage from "./ChatsPage"
-import HomePage from "./HomePage"
-import LoginPage from "./LoginPage"
-import RegisterPage from "./RegisterPage"
+import ChatsPage from "./ChatsPage";
+import HomePage from "./HomePage";
+import LoginPage from "./LoginPage";
+import ContactUsPage from "./ContactUsPage";
+import AboutPage from "./AboutPage";
 
-
-export { HomePage,ChatsPage,LoginPage,RegisterPage}
+export { HomePage, ChatsPage, LoginPage, ContactUsPage, AboutPage };
