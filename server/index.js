@@ -22,9 +22,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Middleware for redirecting "/" to "/api/v1"
-app.get("/", (req, res) => {
-  res.redirect("/api/v1");
-});
+// app.get("/", (req, res) => {
+//   res.redirect("/api/v1");
+// });
 
 // Routes
 app.use("/api/v1", routes);
