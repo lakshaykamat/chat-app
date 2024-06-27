@@ -33,7 +33,6 @@ const accessChat = async (req, res, next) => {
       .populate("latestMessage");
 
     isChat = await populateChat(isChat);
-    console.log(isChat);
 
     if (isChat.length > 0) {
       res.status(200).json(isChat[0]);

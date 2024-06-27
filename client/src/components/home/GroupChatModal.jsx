@@ -54,7 +54,6 @@ const GroupChatModal = () => {
         users: JSON.stringify(searchUsers.map((u) => u._id)),
       });
 
-      console.log(response);
       const data = response.data;
       setChats([data, ...chats]);
     } catch (error) {}

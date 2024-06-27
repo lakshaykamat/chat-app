@@ -80,6 +80,7 @@ io.on("connection", (socket) => {
     chat.users.forEach(user=>{
         if(user._id == newMessage.sender._id) return
 
+        console.log("YE KE",JSON.stringify(newMessage))
         socket.in(user._id).emit('message recieved',newMessage)
     })
   })

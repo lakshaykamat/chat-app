@@ -41,8 +41,7 @@ const sendMessage = async (req, res) => {
   
       const sender = await User.findById(message.sender, "name avatar email")
       const chat = await Chat.findById(message.chat.toString());
-  
-      console.log(chat)
+
       message = {
         ...message.toObject(),
         sender,
