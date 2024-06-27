@@ -6,6 +6,7 @@ const connectDatabase = require("./config/mongo.js");
 const routes = require("./routes");
 const errorHandler = require("./middleware/errorHandler.js");
 const notFound = require("./middleware/notFound.js");
+const path = require('path')
 const socketIo = require("socket.io");
 
 const PORT = process.env.PORT || 5000;
@@ -28,6 +29,19 @@ app.get("/", (req, res) => {
 // Routes
 app.use("/api/v1", routes);
 
+
+// Deployment
+
+
+const __dirname1 = path.resolve()
+if(process.env.NODE_ENV == 'production'){
+    app.use(express.static(path.join(__dirname1,"/client/dist")))
+
+    app.get('*',(req,res)=>{
+        res.sendFile(path.resolve(__dirname1,"client","dist","index.html"))
+    })
+}
+
 // Middleware for handling "Not Found" routes
 app.use(notFound);
 
@@ -44,13 +58,6 @@ const io = socketIo(server, {
     origin: "*",
   },
 });
-
-// const io = require("socket.io")(server,{
-//     pingTimeout:60000,
-//     cors:{
-//         origin:"http://localhost:5173"
-//     }
-// })
 
 io.on("connection", (socket) => {
   console.log("Web socket connected");
