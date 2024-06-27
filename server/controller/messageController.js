@@ -1,6 +1,6 @@
 const Message = require("../models/Message.js");
 const Chat = require("../models/Chat.js");
-const User = require("../models/user.js");
+const User = require("../models/User.js");
 const { default: mongoose } = require("mongoose");
 
 //@description     Get all Messages

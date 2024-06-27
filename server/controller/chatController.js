@@ -1,6 +1,6 @@
 const { HttpStatusCode } = require("../lib/index.js");
 const Chat = require("../models/Chat.js");
-const User = require("../models/user.js");
+const User = require("../models/User.js");
 const CustomError = require("../util/customError.js");
 
 // Utility function to populate user data in chat
