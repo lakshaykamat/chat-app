@@ -5,7 +5,6 @@ const axiosInstance = axios.create({
   baseURL: 'https://chat-app-squi.onrender.com/api/v1', // Your API base URL
   headers: {
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
   },
 });
 

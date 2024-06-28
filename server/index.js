@@ -13,15 +13,19 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 connectDatabase();
 
-// Middleware for logging HTTP requests
-
-
-
-
-app.use(morgan("dev"));
-// Add this middleware to handle preflight requests for all routes
 app.use(cors());
 app.options('*', cors());
+
+
+// Middleware for logging HTTP requests
+app.use(morgan("dev"));
+
+
+// Add this middleware to handle preflight requests for all routes
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
 
 // Middleware for parsing JSON and URL-encoded request bodies
 app.use(bodyParser.json());
