@@ -6,7 +6,7 @@ const fetcher = url => axios.get(url).then(res => res.data);
 
 const ChatsPage = () => {
     const [chats, setChats] = useState([]);
-    const { data, error, isLoading } = useSWR("http://127.0.0.1:5000/api/chat", fetcher);
+    const { data, error, isLoading } = useSWR("https://chat-app-squi.onrender.com/api/v1/chat", fetcher);
 
     useEffect(() => {
         if (data) {

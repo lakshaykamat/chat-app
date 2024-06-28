@@ -17,7 +17,7 @@ import { Input } from "../ui/input";
 import GroupChatModal from "../home/GroupChatModal";
 import io from "socket.io-client";
 
-const END_POINT = "http://localhost:5000";
+const END_POINT = "https://chat-app-squi.onrender.com";
 let socket, selectedChatCompare;
 
 // Helper Functions
