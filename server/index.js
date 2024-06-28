@@ -30,7 +30,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/api/v1", routes);
 
 
-// Deployment
+// Deploymenting
 
 
 const __dirname1 = path.resolve()
