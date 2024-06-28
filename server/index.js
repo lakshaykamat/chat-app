@@ -14,8 +14,18 @@ const app = express();
 connectDatabase();
 
 // Middleware for logging HTTP requests
+
+// CORS configuration
+const corsOptions = {
+  origin: 'https://chat-app-one-brown.vercel.app', // Allow requests from this origin
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+};
+
+
 app.use(morgan("dev"));
-app.use(cors());
+app.use(cors(corsOptions));
 
 // Middleware for parsing JSON and URL-encoded request bodies
 app.use(bodyParser.json());
