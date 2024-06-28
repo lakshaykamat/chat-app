@@ -15,17 +15,13 @@ connectDatabase();
 
 // Middleware for logging HTTP requests
 
-// CORS configuration
-const corsOptions = {
-  origin: 'https://chat-app-one-brown.vercel.app', // Allow requests from this origin
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  preflightContinue: false,
-  optionsSuccessStatus: 204,
-};
+
 
 
 app.use(morgan("dev"));
-app.use(cors(corsOptions));
+// Add this middleware to handle preflight requests for all routes
+app.use(cors());
+app.options('*', cors());
 
 // Middleware for parsing JSON and URL-encoded request bodies
 app.use(bodyParser.json());
