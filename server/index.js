@@ -22,9 +22,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Middleware for redirecting "/" to "/api/v1"
-// app.get("/", (req, res) => {
-//   res.redirect("/api/v1");
-// });
+app.get("/", (req, res) => {
+  res.redirect("/api/v1");
+});
 
 // Routes
 app.use("/api/v1", routes);
@@ -33,14 +33,14 @@ app.use("/api/v1", routes);
 // Deployment
 
 
-const __dirname1 = path.resolve()
-if(process.env.NODE_ENV == 'production'){
-    app.use(express.static(path.join(__dirname1,"/client/dist")))
+// const __dirname1 = path.resolve()
+// if(process.env.NODE_ENV == 'production'){
+//     app.use(express.static(path.join(__dirname1,"/client/dist")))
 
-    app.get('*',(req,res)=>{
-        res.sendFile(path.resolve(__dirname1,"client","dist","index.html"))
-    })
-}
+//     app.get('*',(req,res)=>{
+//         res.sendFile(path.resolve(__dirname1,"client","dist","index.html"))
+//     })
+// }
 
 // Middleware for handling "Not Found" routes
 app.use(notFound);
