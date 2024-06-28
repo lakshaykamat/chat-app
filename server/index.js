@@ -21,11 +21,7 @@ app.options('*', cors());
 app.use(morgan("dev"));
 
 
-// Add this middleware to handle preflight requests for all routes
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  next();
-});
+
 
 // Middleware for parsing JSON and URL-encoded request bodies
 app.use(bodyParser.json());
@@ -51,6 +47,13 @@ app.use("/api/v1", routes);
 //         res.sendFile(path.resolve(__dirname1,"client","dist","index.html"))
 //     })
 // }
+
+// Add this middleware to handle preflight requests for all routes
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
+
 
 // Middleware for handling "Not Found" routes
 app.use(notFound);
